@@ -5,4 +5,5 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(BugsLife main.cpp
         Bug.cpp
-        Bug.h)
+        Bug.h
+)
