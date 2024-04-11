@@ -18,20 +18,32 @@ public:
         : id(id), position(std::move(position)), direction(direction), size(size), alive(alive) {}
 
         virtual void move() = 0;
-        bool isWayBlocked();{
+        bool isWayBlocked(){
             int x = position.first;
             int y = position.second;
 
             switch(direction){
-                case 1:
-                    return y == 0;
-                case 2:
-                    return x ==9;
-                case 3:
-                    return y == 9;
-                case 4:
-                    return x == 0;
-                default
+                case 1: //North ↑
+                    if(y == 0){
+                        return true;
+                    }
+
+                case 2: //East →
+                    if(x == 9){
+                        return true;
+                    }
+
+                case 3: //South ↓
+                    if(y == 9){
+                        return true;
+                    }
+
+                case 4: //West ←
+                    if(x == 0){
+                        return true;
+                    }
+
+                default:
                     return false;
             }
         };
