@@ -67,6 +67,12 @@ build CMakeFiles/BugsLife.dir/Hopper.cpp.obj: CXX_COMPILER__BugsLife_unscanned_D
   OBJECT_DIR = CMakeFiles\BugsLife.dir
   OBJECT_FILE_DIR = CMakeFiles\BugsLife.dir
 
+build CMakeFiles/BugsLife.dir/Crawler.cpp.obj: CXX_COMPILER__BugsLife_unscanned_Debug C$:/Users/System$ Manager/CLionProjects/BugsLife/Crawler.cpp || cmake_object_order_depends_target_BugsLife
+  DEP_FILE = CMakeFiles\BugsLife.dir\Crawler.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\BugsLife.dir
+  OBJECT_FILE_DIR = CMakeFiles\BugsLife.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target BugsLife
@@ -75,7 +81,7 @@ build CMakeFiles/BugsLife.dir/Hopper.cpp.obj: CXX_COMPILER__BugsLife_unscanned_D
 #############################################
 # Link the executable BugsLife.exe
 
-build BugsLife.exe: CXX_EXECUTABLE_LINKER__BugsLife_Debug CMakeFiles/BugsLife.dir/main.cpp.obj CMakeFiles/BugsLife.dir/Bug.cpp.obj CMakeFiles/BugsLife.dir/Hopper.cpp.obj
+build BugsLife.exe: CXX_EXECUTABLE_LINKER__BugsLife_Debug CMakeFiles/BugsLife.dir/main.cpp.obj CMakeFiles/BugsLife.dir/Bug.cpp.obj CMakeFiles/BugsLife.dir/Hopper.cpp.obj CMakeFiles/BugsLife.dir/Crawler.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\BugsLife.dir

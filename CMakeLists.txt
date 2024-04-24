@@ -8,4 +8,6 @@ add_executable(BugsLife main.cpp
         Bug.h
         Hopper.cpp
         Hopper.h
+        Crawler.cpp
+        Crawler.h
 )
