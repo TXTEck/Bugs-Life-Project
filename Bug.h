@@ -16,7 +16,10 @@ protected:
 
 public:
     Bug(int id, pair<int, int> position, int direction, int size, bool alive)
-            : id(id), position(std::move(position)), direction(direction), size(size), alive(alive) {}
+            : id(id), position(std::move(position)), direction(direction), size(size), alive(alive) {
+        path.push_back(position);
+    }
+
 
 
     int getId() const {
@@ -78,25 +81,26 @@ public:
                 if (y == 0) {
                     return true;
                 }
-
+                break;
             case 2: //East →
                 if (x == 9) {
                     return true;
                 }
-
+                break;
             case 3: //South ↓
                 if (y == 9) {
                     return true;
                 }
-
+                break;
             case 4: //West ←
                 if (x == 0) {
                     return true;
                 }
-
+                break;
             default:
-                return false;
+                break;
         }
+        return false;
     };
 
 };

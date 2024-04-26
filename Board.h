@@ -15,6 +15,8 @@ class Board {
 
 private:
     vector<Bug *> bugs_vector;
+    const int WIDTH = 10;
+    const int HEIGHT = 10;
 
 public:
     void parseLine(const string &strLine) {
@@ -85,6 +87,8 @@ public:
         for(int i = 0; i < bugs_vector.size(); i++){
             bugs_vector[i]->move();
         }
+
+        displayBugs();
     }
 
     void displayBugs(){
@@ -135,6 +139,68 @@ public:
                 endl;
             }
 
+        }
+    }
+
+    void searchBug(int id){
+        for(int i = 0; i < bugs_vector.size(); i++){
+            if(bugs_vector[i]->getId() == id){
+                cout << "Bug found at position (" << bugs_vector[i]->getPosition().first << " " << bugs_vector[i]->getPosition().second << ")" << endl;
+                return;
+            }
+        }
+        cout << "Bug not found" << endl;
+    }
+
+    // Range based for loop learnt from https://www.geeksforgeeks.org/range-based-loop-c/
+    void displayPath() {
+        for (int i = 0; i < bugs_vector.size(); i++) {
+            string bugType;
+            if (typeid(*bugs_vector[i]) == typeid(Crawler)) {
+                bugType = "Crawler";
+            } else if (typeid(*bugs_vector[i]) == typeid(Hopper)) {
+                bugType = "Hopper";
+            }
+            cout << "Bug " << bugs_vector[i]->getId() << " " << bugType << " path: ";
+            const list<pair<int, int>>& path = bugs_vector[i]->getPath();
+            for (auto const& position : path) {
+                cout << "(" << position.first << " " << position.second << ") ";
+            }
+            cout << endl;
+        }
+    };
+
+    void displayCells()
+    {
+        for (int i = 0; i < WIDTH; ++i) {
+            for (int j = 0; j < HEIGHT; ++j) {
+                string cell;
+                bool isEmpty = true;
+
+                for (int k = 0; k < bugs_vector.size(); ++k) {
+                    if (bugs_vector[k]->getPosition().first == i && bugs_vector[k]->getPosition().second == j) {
+                        if (!isEmpty) {
+                            cell += ", ";
+                        }
+                        if(typeid(*bugs_vector[k]) == typeid(Crawler)){
+                            cell += "Crawler " + to_string(bugs_vector[k]->getId());
+                        }
+                        else if(typeid(*bugs_vector[k]) == typeid(Hopper)){
+                            cell += "Hopper " + to_string(bugs_vector[k]->getId());
+                        }
+                        isEmpty = false;
+                    }
+                }
+                cout << "(" << i << "," << j << "): ";
+                if (isEmpty)
+                {
+                    cout << "empty" << endl;
+                }
+                else
+                {
+                    cout << cell << endl;
+                }
+            }
         }
     }
 };

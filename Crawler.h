@@ -9,14 +9,9 @@ public:
         : Bug(id, std::move(position), direction, size, alive) {}
 
     void move() override{
-        bool canMove = false;
-        while(!canMove) {
             if (isWayBlocked()) {
                 direction = (rand() % 4) + 1;
-            } else {
-                canMove = true;
             }
-        }
         switch(direction){
             case 1: //North ↑
                 position.second--;
