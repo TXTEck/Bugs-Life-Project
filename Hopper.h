@@ -12,9 +12,41 @@ public:
         : Bug(id, std::move(position), direction, size, alive), hopLength(hopLength) {}
 
     void move() override{
+
         while(isWayBlocked()){
-            direction = (rand() % 4) + 1;
+            direction = rand() % 4 + 1;
         }
+        switch (direction) {
+            case 1: // North ↑
+                if (position.second >= hopLength) { // Check if there's enough space to hop north
+                    position.second -= hopLength;
+                } else {
+                    position.second = 0; // Adjust to boundary if not enough space
+                }
+                break;
+            case 2: // East →
+                if (position.first + hopLength <= 9) { // Check if there's enough space to hop east
+                    position.first += hopLength;
+                } else {
+                    position.first = 9; // Adjust to boundary if not enough space
+                }
+                break;
+            case 3: // South ↓
+                if (position.second + hopLength <= 9) { // Check if there's enough space to hop south
+                    position.second += hopLength;
+                } else {
+                    position.second = 9; // Adjust to boundary if not enough space
+                }
+                break;
+            case 4: // West ←
+                if (position.first >= hopLength) { // Check if there's enough space to hop west
+                    position.first -= hopLength;
+                } else {
+                    position.first = 0; // Adjust to boundary if not enough space
+                }
+                break;
+        }
+        path.push_back(position);
     }
 };
 
