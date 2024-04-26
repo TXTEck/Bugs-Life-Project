@@ -1,5 +1,6 @@
 #include <utility>
 #include <list>
+
 #ifndef BUGSLIFE_BUG_H
 #define BUGSLIFE_BUG_H
 using namespace std;
@@ -11,42 +12,93 @@ protected:
     int direction; // 1 = North, 2 = East, 3 = South, 4 = West
     int size;
     bool alive;
-    list<pair<int,int>> path;
+    list<pair<int, int>> path;
 
 public:
     Bug(int id, pair<int, int> position, int direction, int size, bool alive)
-        : id(id), position(std::move(position)), direction(direction), size(size), alive(alive) {}
+            : id(id), position(std::move(position)), direction(direction), size(size), alive(alive) {}
 
-        virtual void move() = 0;
-        bool isWayBlocked(){
-            int x = position.first;
-            int y = position.second;
 
-            switch(direction){
-                case 1: //North ↑
-                    if(y == 0){
-                        return true;
-                    }
+    int getId() const {
+        return id;
+    }
 
-                case 2: //East →
-                    if(x == 9){
-                        return true;
-                    }
+    void setId(int id) {
+        Bug::id = id;
+    }
 
-                case 3: //South ↓
-                    if(y == 9){
-                        return true;
-                    }
+    const pair<int, int> &getPosition() const {
+        return position;
+    }
 
-                case 4: //West ←
-                    if(x == 0){
-                        return true;
-                    }
+    void setPosition(const pair<int, int> &position) {
+        Bug::position = position;
+    }
 
-                default:
-                    return false;
-            }
-        };
+    int getDirection() const {
+        return direction;
+    }
+
+    void setDirection(int direction) {
+        Bug::direction = direction;
+    }
+
+    int getSize() const {
+        return size;
+    }
+
+    void setSize(int size) {
+        Bug::size = size;
+    }
+
+    bool isAlive() const {
+        return alive;
+    }
+
+    void setAlive(bool alive) {
+        Bug::alive = alive;
+    }
+
+    const list<pair<int, int>> &getPath() const {
+        return path;
+    }
+
+    void setPath(const list<pair<int, int>> &path) {
+        Bug::path = path;
+    }
+
+    virtual void move() = 0;
+
+    bool isWayBlocked() {
+        int x = position.first;
+        int y = position.second;
+
+        switch (direction) {
+            case 1: //North ↑
+                if (y == 0) {
+                    return true;
+                }
+
+            case 2: //East →
+                if (x == 9) {
+                    return true;
+                }
+
+            case 3: //South ↓
+                if (y == 9) {
+                    return true;
+                }
+
+            case 4: //West ←
+                if (x == 0) {
+                    return true;
+                }
+
+            default:
+                return false;
+        }
+    };
+
 };
 
 

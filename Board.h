@@ -86,6 +86,57 @@ public:
             bugs_vector[i]->move();
         }
     }
+
+    void displayBugs(){
+        for(int i = 0; i < bugs_vector.size(); i++){
+            int direction = bugs_vector[i]->getDirection();
+            string currentDirection,status;
+            switch(direction){
+                case 1:
+                    currentDirection = "North";
+                    break;
+                case 2:
+                    currentDirection =  "East";
+                    break;
+                case 3:
+                    currentDirection =  "South";
+                    break;
+                case 4:
+                    currentDirection =  "West";
+                    break;
+            }
+            if(bugs_vector[i]->isAlive()){
+                status = "Alive";}
+            else{
+                status = "Dead";
+            }
+            if(typeid(*bugs_vector[i]) == typeid(Crawler)){
+                cout
+                << bugs_vector[i]->getId()
+                << " Crawler" <<
+                "  (" << bugs_vector[i]->getPosition().first << " " <<
+                bugs_vector[i]->getPosition().second << ") " <<
+                bugs_vector[i]->getSize() <<
+                "  " << currentDirection <<
+                "  " << status <<
+                endl;
+            }
+            else if(typeid(*bugs_vector[i]) == typeid(Hopper))
+            {
+                cout
+                << bugs_vector[i]->getId()
+                << " Hopper" <<
+                "  (" << bugs_vector[i]->getPosition().first << " " <<
+                bugs_vector[i]->getPosition().second << ") " <<
+                bugs_vector[i]->getSize() <<
+                "  " << currentDirection <<
+                "  " << static_cast<Hopper*>(bugs_vector[i])->getHopLength() <<
+                "  " << status <<
+                endl;
+            }
+
+        }
+    }
 };
 
 

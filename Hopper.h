@@ -11,7 +11,10 @@ public:
     Hopper(int id, pair<int, int> position, int direction, int size, bool alive, int hopLength)
         : Bug(id, std::move(position), direction, size, alive), hopLength(hopLength) {}
 
-    void move() override{
+    int getHopLength() const {
+        return hopLength;
+    }
+        void move() override{
 
         while(isWayBlocked()){
             direction = rand() % 4 + 1;
