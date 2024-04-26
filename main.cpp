@@ -23,16 +23,16 @@ int main() {
     } else {
         cout << "Unable to open file" << endl;
     }
-
+    cout << "Welcome to BugsLife!" << endl;
     int choice;
     do{
-    cout << "Welcome to BugsLife!" << endl;
     cout << "1. Display bugs" << endl;
     cout << "2. Search for a bug" << endl;
     cout << "3. Move all bugs" << endl;
     cout << "4. Display bug History" << endl;
     cout << "5. Display Cells" << endl;
-    cout << "6. Exit" << endl;
+    cout << "6. Run Simulation" << endl;
+    cout << "7. Exit" << endl;
 
     cin >> choice;
     switch (choice) {
@@ -55,6 +55,9 @@ int main() {
             board.displayCells();
             break;
         case 6:
+            board.runSimulation();
+            break;
+        case 7:
             writeToFile(board.getBugsVector());
             cout << "Goodbye!" << endl;
             return 0;
@@ -62,7 +65,7 @@ int main() {
             cout << "Invalid choice" << endl;
             break;
     }
-    }while(choice != 6);
+    }while(choice != 7);
 }
 
 //How to format time from https://en.cppreference.com/w/cpp/io/manip/put_time

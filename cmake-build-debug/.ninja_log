@@ -64,3 +64,11 @@
 12	831	7358639751307785	CMakeFiles/BugsLife.dir/Board.cpp.obj	f0b40a9e0d2ee8cd
 5	1058	7358639753511145	CMakeFiles/BugsLife.dir/main.cpp.obj	5312bac7a763cd2b
 1058	1251	7358639755485884	BugsLife.exe	965f9e7de8c7c108
+43	458	7358723113416915	CMakeFiles/BugsLife.dir/Bug.cpp.obj	7329e2f6c9e17864
+59	459	7358723113436860	CMakeFiles/BugsLife.dir/Crawler.cpp.obj	12ae355fb77b8301
+49	754	7358723116398944	CMakeFiles/BugsLife.dir/Hopper.cpp.obj	a114009038ce0eec
+53	855	7358723117416225	CMakeFiles/BugsLife.dir/Board.cpp.obj	f0b40a9e0d2ee8cd
+5	1211	7358723120966716	CMakeFiles/BugsLife.dir/main.cpp.obj	5312bac7a763cd2b
+1211	1453	7358723123340566	BugsLife.exe	965f9e7de8c7c108
+4	971	7358723329036745	CMakeFiles/BugsLife.dir/main.cpp.obj	5312bac7a763cd2b
+972	1126	7358723330552616	BugsLife.exe	965f9e7de8c7c108

@@ -103,6 +103,9 @@ public:
         return false;
     };
 
+    void grow(int amount) {
+        size += amount;
+    }
 };
 
 
