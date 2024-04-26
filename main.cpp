@@ -10,16 +10,16 @@ using namespace std;
 
 int main() {
     Board board;
-    ifstream file("bugs.txt"); // Ensure this is the correct path to your file
+    ifstream file("bugs.txt");
 
     if(file) {
         string line;
-        while (getline(file, line)) {  // This reads an entire line until a newline character
+        while (getline(file, line)) {
             if (!line.empty()) {
                 board.parseLine(line);
             }
         }
-        file.close();  // Close the file when you're done reading
+        file.close();
     } else {
         cout << "Unable to open file" << endl;
     }
