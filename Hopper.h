@@ -21,31 +21,31 @@ public:
         }
         switch (direction) {
             case 1: // North ↑
-                if (position.second >= hopLength) { // Check if there's enough space to hop north
+                if (position.second >= hopLength) {
                     position.second -= hopLength;
                 } else {
-                    position.second = 0; // Adjust to boundary if not enough space
+                    position.second = 0;
                 }
                 break;
             case 2: // East →
-                if (position.first + hopLength <= 9) { // Check if there's enough space to hop east
+                if (position.first + hopLength <= 9) {
                     position.first += hopLength;
                 } else {
-                    position.first = 9; // Adjust to boundary if not enough space
+                    position.first = 9;
                 }
                 break;
             case 3: // South ↓
-                if (position.second + hopLength <= 9) { // Check if there's enough space to hop south
+                if (position.second + hopLength <= 9) {
                     position.second += hopLength;
                 } else {
-                    position.second = 9; // Adjust to boundary if not enough space
+                    position.second = 9;
                 }
                 break;
             case 4: // West ←
-                if (position.first >= hopLength) { // Check if there's enough space to hop west
+                if (position.first >= hopLength) {
                     position.first -= hopLength;
                 } else {
-                    position.first = 0; // Adjust to boundary if not enough space
+                    position.first = 0;
                 }
                 break;
         }

@@ -13,6 +13,7 @@ protected:
     int size;
     bool alive;
     list<pair<int, int>> path;
+    int eatenBy = -1;
 
 public:
     Bug(int id, pair<int, int> position, int direction, int size, bool alive)
@@ -105,6 +106,14 @@ public:
 
     void grow(int amount) {
         size += amount;
+    }
+
+    void setEatenBy(int id) {
+        eatenBy = id;
+    }
+
+    int getEatenBy() const {
+        return eatenBy;
     }
 };
 

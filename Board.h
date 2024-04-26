@@ -8,6 +8,8 @@ using namespace std;
 #include <sstream>
 #include <string>
 #include <algorithm>
+#include <chrono>
+#include <thread>
 #include "Bug.h"
 #include "Crawler.h"
 #include "Hopper.h"
@@ -165,7 +167,13 @@ public:
             cout << "Bug " << bugs_vector[i]->getId() << " " << bugType << " path: ";
             const list<pair<int, int>> &path = bugs_vector[i]->getPath();
             for (auto const &position: path) {
-                cout << "(" << position.first << " " << position.second << ") ";
+                cout << "(" << position.first << "," << position.second << "), ";
+            }
+
+            if (bugs_vector[i]-> isAlive()) {
+                cout << "Alive!";
+            } else {
+                cout << "Eaten by " << bugs_vector[i]->getEatenBy();
             }
             cout << endl;
         }
@@ -226,7 +234,8 @@ public:
                     for (Bug *bug: bugsInCell) {
                         if (bug != winner) {
                             winner->grow(bug->getSize());
-                            bug->setAlive(false);  // Loser bugs are marked as dead
+                            bug->setAlive(false);
+                            bug->setEatenBy(winner->getId());
                         }
                     }
 
@@ -266,6 +275,33 @@ public:
         }
 
         return winner;
+    }
+
+    //Check if there is only one bug alive
+    bool simulationEnd()
+    {
+        int bugsAlive = 0;
+        for (int i = 0; i < bugs_vector.size(); i++) {
+            if (bugs_vector[i]->isAlive()) {
+                bugsAlive++;
+                if(bugsAlive > 1)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    //Run the simulation each second from https://cplusplus.com/forum/general/101094/#:~:text=just%20pass%20the%20function%20pointer,the%20function%20every%201%20second.
+    void runSimulation()
+    {
+        while(!simulationEnd())
+        {
+            moveBugs();
+            this_thread::sleep_for(chrono::seconds(1));
+            cout << "---------------------------------------------------" << endl;
+        }
     }
 };
 

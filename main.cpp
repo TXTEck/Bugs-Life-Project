@@ -56,6 +56,7 @@ int main() {
             break;
         case 6:
             board.runSimulation();
+            writeToFile(board.getBugsVector());
             break;
         case 7:
             writeToFile(board.getBugsVector());
@@ -90,7 +91,12 @@ void writeToFile(const vector<Bug*>& bugs_vector)
             fout << "Bug " << bugs_vector[i]->getId() << " " << bugType << " path: ";
             const list<pair<int, int>>& path = bugs_vector[i]->getPath();
             for (auto const& position : path) {
-                fout << "(" << position.first << " " << position.second << ") ";
+                fout << "(" << position.first << "," << position.second << "), ";
+            }
+            if (bugs_vector[i]-> isAlive()) {
+                fout << "Alive!";
+            } else {
+                fout << "Eaten by " << bugs_vector[i]->getEatenBy();
             }
             fout << endl;
         }
