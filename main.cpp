@@ -1,13 +1,14 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <sstream>
+#include <iomanip>
 #include "Bug.h"
-#include "Crawler.h"
-#include "Hopper.h"
 #include "Board.h"
+#include "ctime"
 
 using namespace std;
-
+void writeToFile(const vector<Bug*>& bugs_vector);
 int main() {
     Board board;
     ifstream file("bugs.txt");
@@ -29,7 +30,7 @@ int main() {
     cout << "1. Display bugs" << endl;
     cout << "2. Search for a bug" << endl;
     cout << "3. Move all bugs" << endl;
-    cout << "4. Display bug paths" << endl;
+    cout << "4. Display bug History" << endl;
     cout << "5. Display Cells" << endl;
     cout << "6. Exit" << endl;
 
@@ -54,6 +55,7 @@ int main() {
             board.displayCells();
             break;
         case 6:
+            writeToFile(board.getBugsVector());
             cout << "Goodbye!" << endl;
             return 0;
         default:
@@ -61,5 +63,38 @@ int main() {
             break;
     }
     }while(choice != 6);
-
 }
+
+//How to format time from https://en.cppreference.com/w/cpp/io/manip/put_time
+void writeToFile(const vector<Bug*>& bugs_vector)
+{
+    time_t t = time(0);
+    tm tm = *localtime(&t);
+    stringstream ss;
+    ss << put_time(&tm, "%Y-%m-%d_%H-%M-%S");
+    string filename = "bugs_life_history_" + ss.str() + ".out";
+
+    ofstream fout(filename);
+    if(fout)
+    {
+        for (int i = 0; i < bugs_vector.size(); i++) {
+            string bugType;
+            if (typeid(*bugs_vector[i]) == typeid(Crawler)) {
+                bugType = "Crawler";
+            } else if (typeid(*bugs_vector[i]) == typeid(Hopper)) {
+                bugType = "Hopper";
+            }
+            fout << "Bug " << bugs_vector[i]->getId() << " " << bugType << " path: ";
+            const list<pair<int, int>>& path = bugs_vector[i]->getPath();
+            for (auto const& position : path) {
+                fout << "(" << position.first << " " << position.second << ") ";
+            }
+            fout << endl;
+        }
+        fout.close();
+    }
+    else{
+        cout << "Unable to open file" << endl;
+    }
+}
+

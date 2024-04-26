@@ -203,7 +203,12 @@ public:
             }
         }
     }
+
+    vector<Bug *> getBugsVector() const {
+        return bugs_vector;
+    }
 };
+
 
 
 #endif //BUGSLIFE_BOARD_H
