@@ -3,13 +3,16 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <SFML/Graphics.hpp>
 #include "Bug.h"
 #include "Board.h"
 #include "ctime"
 
 using namespace std;
+using namespace sf;
 void writeToFile(const vector<Bug*>& bugs_vector);
 int main() {
+
     Board board;
     ifstream file("bugs.txt");
 
@@ -23,6 +26,7 @@ int main() {
     } else {
         cout << "Unable to open file" << endl;
     }
+    file.close();
     cout << "Welcome to BugsLife!" << endl;
     int choice;
     do{
@@ -65,8 +69,10 @@ int main() {
         default:
             cout << "Invalid choice" << endl;
             break;
-    }
+        }
+
     }while(choice != 7);
+
 }
 
 //How to format time from https://en.cppreference.com/w/cpp/io/manip/put_time
@@ -88,7 +94,10 @@ void writeToFile(const vector<Bug*>& bugs_vector)
             } else if (typeid(*bugs_vector[i]) == typeid(Hopper)) {
                 bugType = "Hopper";
             }
-            fout << "Bug " << bugs_vector[i]->getId() << " " << bugType << " path: ";
+            else if (typeid(*bugs_vector[i]) == typeid(Teleporter)) {
+                bugType = "Teleporter";
+            }
+            fout << bugs_vector[i]->getId() << " " << bugType << " path: ";
             const list<pair<int, int>>& path = bugs_vector[i]->getPath();
             for (auto const& position : path) {
                 fout << "(" << position.first << "," << position.second << "), ";

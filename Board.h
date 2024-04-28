@@ -13,6 +13,7 @@ using namespace std;
 #include "Bug.h"
 #include "Crawler.h"
 #include "Hopper.h"
+#include "Teleporter.h"
 
 
 class Board {
@@ -33,51 +34,34 @@ public:
         string strTemp; // temporary string
 
         try {
+            getline(strStream, strTemp, DELIMITER); // read next field (id) as a string
+            int id = stoi(strTemp); // convert string to int conversion (may throw exceptions)
+
+            getline(strStream, strTemp, DELIMITER);
+            int x = stoi(strTemp);
+
+            getline(strStream, strTemp, DELIMITER);
+            int y = stoi(strTemp);
+
+            pair<int, int> position = make_pair(x, y);
+
+            getline(strStream, strTemp, DELIMITER);
+            int direction = stoi(strTemp);
+
+            getline(strStream, strTemp, DELIMITER);
+            int size = stoi(strTemp);
+
             if (bug_type == "C") { // if it is Crawler, then read the Crawler fields
-                getline(strStream, strTemp, DELIMITER); // read next field (id) as a string
-                int id = stoi(strTemp); // convert string to int conversion (may throw exceptions)
-
-                getline(strStream, strTemp, DELIMITER);
-                int x = stoi(strTemp);
-
-                getline(strStream, strTemp, DELIMITER);
-                int y = stoi(strTemp);
-
-                pair<int, int> position = make_pair(x, y);
-
-                getline(strStream, strTemp, DELIMITER);
-                int direction = stoi(strTemp);
-
-                getline(strStream, strTemp, DELIMITER);
-                int size = stoi(strTemp);
-
-
                 bugs_vector.push_back(new Crawler(id, position, direction, size, true));
-
-
-            } else if (bug_type == "H") { // if it is Hopper, then read the Hopper fields
-                getline(strStream, strTemp, DELIMITER); // read next field (id) as a string
-                int id = stoi(strTemp); // convert string to int conversion (may throw exceptions)
-
-                getline(strStream, strTemp, DELIMITER); // read next field (id) as a string
-                int x = stoi(strTemp); // convert string to int conversion (may throw exceptions)
-
-                getline(strStream, strTemp, DELIMITER);
-                int y = stoi(strTemp);
-
-                pair<int, int> position = make_pair(x, y);
-
-                getline(strStream, strTemp, DELIMITER);
-                int direction = stoi(strTemp);
-
-                getline(strStream, strTemp, DELIMITER);
-                int size = stoi(strTemp);
-
+            }
+            else if (bug_type == "H") { // if it is Hopper, then read the Hopper fields
                 getline(strStream, strTemp, DELIMITER);
                 int hopLength = stoi(strTemp);
-
-
                 bugs_vector.push_back(new Hopper(id, position, direction, size, true, hopLength));
+            }
+            else if (bug_type == "T")
+            {
+                bugs_vector.push_back(new Teleporter(id, position, direction, size, true));
             }
 
         }
@@ -140,6 +124,18 @@ public:
                         "  " << status <<
                         endl;
             }
+            else if (typeid(*bugs_vector[i]) == typeid(Teleporter))
+            {
+                cout
+                        << bugs_vector[i]->getId()
+                        << " Teleporter" <<
+                        "  (" << bugs_vector[i]->getPosition().first << " " <<
+                        bugs_vector[i]->getPosition().second << ") " <<
+                        bugs_vector[i]->getSize() <<
+                        "  " << currentDirection <<
+                        "  " << status <<
+                        endl;
+            }
 
         }
     }
@@ -163,8 +159,11 @@ public:
                 bugType = "Crawler";
             } else if (typeid(*bugs_vector[i]) == typeid(Hopper)) {
                 bugType = "Hopper";
+            } else if (typeid(*bugs_vector[i]) == typeid(Teleporter))
+            {
+                bugType = "Teleporter";
             }
-            cout << "Bug " << bugs_vector[i]->getId() << " " << bugType << " path: ";
+            cout << bugs_vector[i]->getId() << " " << bugType << " path: ";
             const list<pair<int, int>> &path = bugs_vector[i]->getPath();
             for (auto const &position: path) {
                 cout << "(" << position.first << "," << position.second << "), ";
@@ -194,6 +193,10 @@ public:
                             cell += "Crawler " + to_string(bugs_vector[k]->getId());
                         } else if (typeid(*bugs_vector[k]) == typeid(Hopper)) {
                             cell += "Hopper " + to_string(bugs_vector[k]->getId());
+                        }
+                        else if (typeid(*bugs_vector[k]) == typeid(Teleporter))
+                        {
+                            cell += "Teleporter " + to_string(bugs_vector[k]->getId());
                         }
                         isEmpty = false;
                     }
