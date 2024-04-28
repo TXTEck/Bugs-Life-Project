@@ -12,14 +12,4 @@ add_executable(BugsLife main.cpp
         Crawler.h
         Board.cpp
         Board.h
-        Teleporter.cpp
-        Teleporter.h
 )
-
-set(SFML_STATIC_LIBRARIES TRUE)
-set(SFML_DIR "C:/Users/System Manager/CLionProjects/SFML-2.5.1/lib/cmake/SFML")
-find_package(SFML 2.5 COMPONENTS audio graphics window system REQUIRED)
-
-include_directories(${SFML_INCLUDE_DIR})
-# Link SFML to your project
-target_link_libraries(BugsLife sfml-graphics sfml-window sfml-system)
