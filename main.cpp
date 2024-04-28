@@ -3,13 +3,16 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <SFML/Graphics.hpp>
 #include "Bug.h"
 #include "Board.h"
 #include "ctime"
 
 using namespace std;
+using namespace sf;
 void writeToFile(const vector<Bug*>& bugs_vector);
 int main() {
+
     Board board;
     ifstream file("bugs.txt");
 
@@ -23,6 +26,7 @@ int main() {
     } else {
         cout << "Unable to open file" << endl;
     }
+    file.close();
     cout << "Welcome to BugsLife!" << endl;
     int choice;
     do{
@@ -67,6 +71,69 @@ int main() {
             break;
     }
     }while(choice != 7);
+//    const int boardWidth = 10;
+//    const int boardHeight = 10;
+//    const int windowSize = 600; // Square window for simplicity
+//    RenderWindow window(VideoMode(windowSize, windowSize),
+//                        "Bugs Life Simulation");
+//
+//    float cellSize = static_cast<float>(windowSize) / boardWidth; // Cell size based on window size
+//    RectangleShape cell(Vector2f(cellSize, cellSize)); // Square cells
+//    cell.setFillColor(Color::White);
+//    cell.setOutlineColor(Color::Black);
+//    cell.setOutlineThickness(1);
+//
+//    Board board;
+//    ifstream file("bugs.txt");
+//    if(file) {
+//        string line;
+//        while (getline(file, line)) {
+//            if (!line.empty()) {
+//                board.parseLine(line);
+//            }
+//        }
+//    } else {
+//        cout << "Unable to open file" << endl;
+//        return -1;
+//    }
+//    file.close();
+//
+//    while (window.isOpen()) {
+//        Event event;
+//        while (window.pollEvent(event)) {
+//            if (event.type == Event::Closed)
+//                window.close();
+//        }
+//
+//        window.clear(Color::Green); // Set background to green
+//
+//        // Draw the board
+//        for (int i = 0; i < boardWidth; i++) {
+//            for (int j = 0; j < boardHeight; j++) {
+//                cell.setPosition(i * cellSize, j * cellSize);
+//                window.draw(cell);
+//            }
+//        }
+//
+//        // Draw the bugs
+//        auto bugs_vector = board.getBugsVector();
+//        for (int i = 0; i < bugs_vector.size(); i++) {
+//            CircleShape bugShape(cellSize / 2); // Circle radius half the cell size
+//            if (typeid(*bugs_vector[i]) == typeid(Crawler)) {
+//                bugShape.setFillColor(Color::Red);
+//            } else if (typeid(*bugs_vector[i]) == typeid(Hopper)) {
+//                bugShape.setFillColor(Color::Blue);
+//            }
+//            pair position = bugs_vector[i]->getPosition();
+//            bugShape.setPosition(position.first * cellSize, position.second * cellSize);
+//            window.draw(bugShape);
+//        }
+//
+//        window.display();
+//    }
+//
+//    return 0;
+
 }
 
 //How to format time from https://en.cppreference.com/w/cpp/io/manip/put_time
@@ -88,7 +155,10 @@ void writeToFile(const vector<Bug*>& bugs_vector)
             } else if (typeid(*bugs_vector[i]) == typeid(Hopper)) {
                 bugType = "Hopper";
             }
-            fout << "Bug " << bugs_vector[i]->getId() << " " << bugType << " path: ";
+            else if (typeid(*bugs_vector[i]) == typeid(Teleporter)) {
+                bugType = "Teleporter";
+            }
+            fout << bugs_vector[i]->getId() << " " << bugType << " path: ";
             const list<pair<int, int>>& path = bugs_vector[i]->getPath();
             for (auto const& position : path) {
                 fout << "(" << position.first << "," << position.second << "), ";
